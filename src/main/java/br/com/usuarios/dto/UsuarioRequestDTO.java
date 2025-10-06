@@ -18,6 +18,11 @@ public record UsuarioRequestDTO(
         @Email(message = "Email deve ser válido")
         String email,
 
+        @Schema(description = "Senha do usuário (mínimo 8 caracteres)", example = "senha1234")
+        @NotBlank(message = "Senha é obrigatória")
+        @Size(min = 8, max = 20, message = "Senha deve ter entre 8 e 20 caracteres")
+        String senha,
+
         @Schema(description = "Telefone no formato DDD + número", example = "61999999999")
         @NotBlank(message = "Telefone é obrigatório")
         @Pattern(regexp = "\\d{11}", message = "Telefone deve ter 11 dígitos (DDD + número)")
@@ -55,4 +60,5 @@ public record UsuarioRequestDTO(
         @Schema(description = "País do usuário", example = "Brasil")
 
         String pais
-) {}
+) {
+}

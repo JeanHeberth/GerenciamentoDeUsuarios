@@ -6,6 +6,7 @@ import br.com.usuarios.entity.Usuario;
 import br.com.usuarios.mapper.UsuarioMapper;
 import br.com.usuarios.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,10 +18,11 @@ import java.util.stream.Collectors;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
-
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public UsuarioResponseDTO criarUsuario(UsuarioRequestDTO usuarioRequestDTO) {
         Usuario usuario = UsuarioMapper.toUsuario(usuarioRequestDTO);
+        usuario.setSenha(passwordEncoder.encode(usuarioRequestDTO.senha()));
         usuarioRepository.save(usuario);
         return UsuarioMapper.toUsuarioResponseDTO(usuario);
     }
